@@ -71,11 +71,11 @@ const MainComponent = ({ socket }) => {
 
           var configuration = {
             iceServers: [
-              {
-                urls: ['turn:numb.viagenie.ca'],
-                credential: 'muazkh',
-                username: 'webrtc@live.com',
-              },
+              // {
+              //   urls: ['turn:numb.viagenie.ca'],
+              //   credential: 'muazkh',
+              //   username: 'webrtc@live.com',
+              // },
               {
                 urls: ['stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302'],
               },
