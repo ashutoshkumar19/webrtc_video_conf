@@ -6,3 +6,6 @@ Then start both client and server using single command:
 
 - npm run dev
 
+# View this project live:
+
+https://webrtc-videoconf.herokuapp.com/

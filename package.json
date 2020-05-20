@@ -1,7 +1,7 @@
 {
-  "name": "video_conf_app",
+  "name": "webrtc_video_conf",
   "version": "1.0.0",
-  "description": "Simple video conference app using WebRTC",
+  "description": "A Video conferencing and messaging app made using WebRTC technology for data transfer, Socket.io for signalling server and React for frontend.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
