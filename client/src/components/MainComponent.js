@@ -231,6 +231,7 @@ const MainComponent = ({ socket }) => {
 
     dataChannel.onerror = function (error) {
       console.log('Error:', error);
+      closeConnection();
     };
 
     updateDataChannel(dataChannel);
@@ -269,16 +270,40 @@ const MainComponent = ({ socket }) => {
       document.getElementById('hangUpBtn').disabled = true;
 
       updateConnectedUser(null);
-      // remoteVideo.src = null;
 
       let myPeerConnection = getRTCPeerConnection();
       myPeerConnection.close();
       myPeerConnection.onicecandidate = null;
       myPeerConnection.onaddstream = null;
-      // const remoteVideoElement = document.querySelector('video#remoteVideo');
-      // remoteVideoElement.srcObject = null;
+
       updateRTCPeerConnection(myPeerConnection);
       console.log(getRTCPeerConnection());
+
+      stopMediaStream();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const stopMediaStream = () => {
+    try {
+      const localVideoElement = document.querySelector('video#localVideo');
+      const remoteVideoElement = document.querySelector('video#remoteVideo');
+
+      const localMediaStream = localVideoElement.srcObject;
+      const remoteMediaStream = remoteVideoElement.srcObject;
+
+      const localTracks = localMediaStream.getTracks();
+      localTracks.forEach(function (track) {
+        track.stop();
+      });
+      const remoteTracks = remoteMediaStream.getTracks();
+      remoteTracks.forEach(function (track) {
+        track.stop();
+      });
+
+      localVideoElement.srcObject = null;
+      remoteVideoElement.srcObject = null;
     } catch (error) {
       console.log(error);
     }
@@ -312,13 +337,26 @@ const MainComponent = ({ socket }) => {
             username: myUsername,
           };
           dataChannel.send(JSON.stringify(obj));
+          setChat((prevChat) => [
+            ...prevChat,
+            { message: messageText, username: myUsername },
+          ]);
           console.log(`Sent message: ${messageText}`);
+          setFormData((prevState) => ({ ...prevState, message: '' }));
         } catch (error) {
           console.log(error);
         }
       }
     }
   };
+
+  useEffect(() => {
+    var element = document.getElementById('chatList');
+    if (element !== null) {
+      window.scrollTo(0, document.body.scrollHeight);
+      element.scrollTop = element.scrollHeight;
+    }
+  }, [chat]);
 
   return (
     <Fragment>
@@ -352,10 +390,14 @@ const MainComponent = ({ socket }) => {
             name='myUsername'
             type='text'
             id='myUsername'
+            className='input'
+            placeholder='Enter your username'
             value={myUsername}
             onChange={(e) => onChange(e)}
           />
-          <button id='loginBtn'>Login</button>
+          <button id='loginBtn' className='btn btn-sm btn-primary'>
+            Login
+          </button>
         </form>
 
         <div className='form-container'>
@@ -363,13 +405,23 @@ const MainComponent = ({ socket }) => {
             name='otherUsername'
             type='text'
             id='otherUsername'
+            className='input'
+            placeholder='Enter client username'
             value={otherUsername}
             onChange={(e) => onChange(e)}
           />
-          <button id='callBtn' onClick={(e) => establishConnection(e)}>
+          <button
+            id='callBtn'
+            className='btn btn-sm btn-success'
+            onClick={(e) => establishConnection(e)}
+          >
             Establish connection
           </button>
-          <button id='hangUpBtn' onClick={(e) => handleCloseConnection(e)}>
+          <button
+            id='hangUpBtn'
+            className='btn btn-sm btn-danger'
+            onClick={(e) => handleCloseConnection(e)}
+          >
             Hang Up
           </button>
         </div>
@@ -381,22 +433,29 @@ const MainComponent = ({ socket }) => {
             name='message'
             type='text'
             id='msgInput'
+            className='input'
+            placeholder='Type a message'
             value={message}
             onChange={(e) =>
               setFormData({ ...formData, [e.target.name]: e.target.value })
             }
           />
-          <button id='sendMsgBtn'>Send message</button>
+          <button id='sendMsgBtn' className='btn btn-sm btn-dark'>
+            Send Message
+          </button>
         </form>
       </div>
 
       {chat.length > 0 && (
-        <div className='chatList'>
+        <div className='chatList' id='chatList'>
           {chat.map((chat, index) => {
             return (
-              <div key={index} className='chat'>
-                <span className='username'>{chat.username}: </span>
-                <span className='message'>{chat.message}</span>
+              <div
+                key={index}
+                className={`chat ${chat.username === myUsername && `right`}`}
+              >
+                <p className='username'>{chat.username}: </p>
+                <p className='message'>{chat.message}</p>
               </div>
             );
           })}

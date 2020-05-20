@@ -1,5 +1,100 @@
+.btn {
+  margin-right: 5px;
+  border: none;
+  outline: none;
+  height: fit-content;
+  padding: 10px 12px;
+  border-radius: 4px;
+  font-size: 12pt;
+  text-decoration: none;
+  color: #1e1e1e;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-select: none;
+  background-color: #f8f9fa;
+  transition: all 200ms;
+}
+.btn-sm {
+  font-size: 11pt !important;
+  padding: 4px 8px !important;
+}
+.btn:hover {
+  box-shadow: 2px 2px 5px 0 #e0e0e0;
+  opacity: 0.9;
+}
+.btn:active,
+.btn:focus {
+  opacity: 1;
+  background-color: #fafafa;
+  box-shadow: 0px 0px 0px 3px #e0e0e0;
+}
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  &:active,
+  &:focus {
+    opacity: 1;
+    background-color: #0065d1;
+    box-shadow: 0px 0px 0px 3px #b0d6ff;
+  }
+}
+.btn-dark {
+  background-color: #4e4e4e;
+  color: #fff;
+  &:hover {
+    background-color: #2e2e2e;
+  }
+  &:active,
+  &:focus {
+    opacity: 1;
+    background-color: #2e2e2e;
+    box-shadow: 0px 0px 0px 3px #cecece;
+  }
+}
+.btn-success {
+  background-color: #28a745;
+  color: #fff;
+  &:active,
+  &:focus {
+    opacity: 1;
+    background-color: #218338;
+    box-shadow: 0px 0px 0px 3px #a7ecb7;
+  }
+}
+.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+  &:active,
+  &:focus {
+    opacity: 1;
+    background-color: #b42d3b;
+    box-shadow: 0px 0px 0px 3px #ffc2c8;
+  }
+}
+.input {
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  padding: 2px 5px;
+  font-size: 16px;
+  box-shadow: 0 0 0 1px #a0a0a0;
+  transition: ease-in-out 200ms;
+  margin-right: 5px;
+  &:active,
+  &:focus {
+    box-shadow: 0 0 0 2px #64ceff;
+  }
+}
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+// Main Style
+
 .available-devices {
-  margin: 10px;
+  margin: 10px 30px;
   font-size: 14px;
   h4 {
     margin: 5px 0px;
@@ -7,17 +102,18 @@
 }
 
 .videoContainer {
-  display: flex;
+  // display: flex;
+  display: inline-flex;
 
   .localVideoContainer,
   .remoteVideoContainer {
     height: 300px;
     width: fit-content;
-    min-width: 400px;
-    margin: 10px;
+    // min-width: 400px;
+    margin: 10px 0px 10px 30px;
     padding: 2px;
     overflow: hidden;
-    background-color: red;
+    background-color: #4b4b4b;
 
     video {
       height: 100%;
@@ -29,7 +125,7 @@
 .localDisplayMediaContainer {
   height: 300px;
   width: fit-content;
-  margin-left: 10px;
+  margin-left: 50px;
   padding: 2px;
   overflow: hidden;
   background-color: green;
@@ -47,7 +143,7 @@
   .remoteAudioContainer {
     height: fit-content;
     width: fit-content;
-    margin: 10px;
+    margin: 10px 50px;
     display: block;
     p {
       margin: 0px 20px 5px;
@@ -56,27 +152,78 @@
 }
 
 .btn-container {
-  display: flex;
+  display: inline-flex;
 
   .form-container {
-    margin: 10px 20px;
+    margin: 10px;
+    &:first-child {
+      margin-left: 30px;
+      margin-right: 200px;
+    }
   }
 }
 
 .msgForm-container {
-  margin: 10px 20px;
+  margin: 10px 30px;
   .msgForm {
   }
 }
 
 .chatList {
-  margin: 20px;
+  margin: 20px 30px;
   padding: 5px;
-  box-shadow: 0 0 5px 0 #cecece;
+  width: 40%;
+  min-width: 500px;
+  border-radius: 10px;
+  box-shadow: 0 0 25px 0 #a0a0a0;
+  max-height: 325px;
+  overflow: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+
   .chat {
     margin: 10px;
+    padding: 5px 12px 8px;
+    width: fit-content;
+    max-width: 65%;
+    border-radius: 0 10px 10px 10px;
+    background-color: #fff;
+    box-shadow: 1px 1px 8px 0 #aeaeae;
+
     .username {
+      margin: 0;
+      padding: 0;
+      font-size: 14px;
+      font-weight: bold;
       color: rgb(255, 94, 0);
     }
+
+    .message {
+      margin: 0;
+      padding: 0;
+      font-size: 16px;
+      word-break: break-all;
+    }
+
+    &.right {
+      margin-left: auto;
+      color: #fff;
+      background-color: #0085ff;
+      border-radius: 10px 0 10px 10px;
+      box-shadow: -1px 1px 8px 0 #aeaeae;
+
+      .username {
+        display: none;
+        color: rgb(241, 241, 241);
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  .chatList {
+    width: 100%;
+    min-width: 100%;
+    max-height: 800px;
   }
 }
