@@ -1,0 +1,66 @@
+import React, { useState, useEffect } from 'react';
+import io from 'socket.io-client';
+
+import './styles/App.scss';
+
+import MainComponent from './components/MainComponent';
+
+import { getConnectedDevices } from './webrtc/getUserMedia';
+
+// const socket = io.connect('http://localhost:5000');
+const socket = io.connect('/');
+
+const App = () => {
+  const initialState = {
+    videoDevices: [],
+    audioDevices: [],
+  };
+  const [deviceList, setDeviceList] = useState(initialState);
+  const { videoDevices, audioDevices } = deviceList;
+
+  // Get all Audio & Video devices
+  const getAllDevices = () => {
+    const videoDevices = getConnectedDevices('videoinput');
+    var videoObj = Promise.resolve(videoDevices);
+    videoObj.then(
+      function (v) {
+        console.log('Cameras found:', v[0]);
+        // console.log(v.length);
+        setDeviceList((prevState) => ({ ...prevState, videoDevices: v[0] }));
+      },
+      function () {}
+    );
+    const audioDevices = getConnectedDevices('audioinput');
+    var audioObj = Promise.resolve(audioDevices);
+    audioObj.then(
+      function (a) {
+        console.log('Audio device found:', a[0]);
+        // console.log(a.length);
+        setDeviceList((prevState) => ({ ...prevState, audioDevices: a[0] }));
+      },
+      function () {}
+    );
+  };
+
+  useEffect(() => {
+    getAllDevices();
+    // playVideoFromCamera('video#localVideo');
+    // captureDisplayMedia('video#localDisplayMedia');
+  }, []);
+
+  return (
+    <div className='App'>
+      <div className='available-devices'>
+        <h4>Video Devices</h4>
+        {videoDevices ? `${JSON.stringify(videoDevices)}` : 'No video device found'}
+
+        <h4>Audio Devices</h4>
+        {audioDevices ? `${JSON.stringify(audioDevices)}` : 'No audio device found'}
+      </div>
+
+      <MainComponent socket={socket} />
+    </div>
+  );
+};
+
+export default App;
