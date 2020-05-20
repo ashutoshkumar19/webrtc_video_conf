@@ -5,7 +5,7 @@ import './styles/App.scss';
 
 import MainComponent from './components/MainComponent';
 
-import { getConnectedDevices } from './webrtc/getUserMedia';
+import { getConnectedDevices } from './webrtc/globalRTCPeerCoonection';
 
 // const socket = io.connect('http://localhost:5000');
 const socket = io.connect('/');
@@ -20,23 +20,31 @@ const App = () => {
 
   // Get all Audio & Video devices
   const getAllDevices = () => {
-    const videoDevices = getConnectedDevices('videoinput');
-    var videoObj = Promise.resolve(videoDevices);
-    videoObj.then(
-      function (v) {
-        console.log('Cameras found:', v[0]);
-        // console.log(v.length);
-        setDeviceList((prevState) => ({ ...prevState, videoDevices: v[0] }));
+    getConnectedDevices('videoinput').then(
+      function (videoDevices) {
+        var videoObj = Promise.resolve(videoDevices);
+        videoObj.then(
+          function (v) {
+            console.log('Cameras found:', v[0]);
+            // console.log(v.length);
+            setDeviceList((prevState) => ({ ...prevState, videoDevices: v[0] }));
+          },
+          function () {}
+        );
       },
       function () {}
     );
-    const audioDevices = getConnectedDevices('audioinput');
-    var audioObj = Promise.resolve(audioDevices);
-    audioObj.then(
-      function (a) {
-        console.log('Audio device found:', a[0]);
-        // console.log(a.length);
-        setDeviceList((prevState) => ({ ...prevState, audioDevices: a[0] }));
+    getConnectedDevices('audioinput').then(
+      function (audioDevices) {
+        var audioObj = Promise.resolve(audioDevices);
+        audioObj.then(
+          function (a) {
+            console.log('Audio device found:', a[0]);
+            // console.log(a.length);
+            setDeviceList((prevState) => ({ ...prevState, audioDevices: a[0] }));
+          },
+          function () {}
+        );
       },
       function () {}
     );
@@ -44,8 +52,6 @@ const App = () => {
 
   useEffect(() => {
     getAllDevices();
-    // playVideoFromCamera('video#localVideo');
-    // captureDisplayMedia('video#localDisplayMedia');
   }, []);
 
   return (

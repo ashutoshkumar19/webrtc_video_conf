@@ -8,7 +8,7 @@ import {
   getDataChannel,
   updateConnectedUser,
   getConnectedUser,
-  getMediaStreamObject,
+  captureDisplayMedia,
 } from '../webrtc/globalRTCPeerCoonection';
 
 const MainComponent = ({ socket }) => {
@@ -51,6 +51,14 @@ const MainComponent = ({ socket }) => {
       console.log(`Login success for: ${username}`);
       document.getElementById('myUsername').disabled = true;
       document.getElementById('loginBtn').disabled = true;
+
+      // captureDisplayMedia().then(
+      //   function (displayMediaStream) {
+      //     const displayMediaElement = document.querySelector('video#localDisplayMedia');
+      //     displayMediaElement.srcObject = displayMediaStream;
+      //   },
+      //   function () {}
+      // );
 
       getMediaStream().then(
         function (mediaStream) {
@@ -323,7 +331,7 @@ const MainComponent = ({ socket }) => {
         </div>
       </div>
 
-      <div className='audioContainer'>
+      {/* <div className='audioContainer'>
         <div className='localAudioContainer'>
           <p>Local Audio:</p>
           <audio id='localAudio' autoPlay controls />
@@ -334,7 +342,7 @@ const MainComponent = ({ socket }) => {
         </div>
       </div>
 
-      {/* <div className='localDisplayMediaContainer'>
+      <div className='localDisplayMediaContainer'>
         <video id='localDisplayMedia' autoPlay playsInline controls />
       </div> */}
 
