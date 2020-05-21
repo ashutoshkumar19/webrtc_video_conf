@@ -5,7 +5,7 @@ import './styles/App.scss';
 
 import MainComponent from './components/MainComponent';
 
-import { getConnectedDevices } from './webrtc/globalRTCPeerCoonection';
+import { getConnectedDevices } from './webrtc/globalRTCPeerConnection';
 
 // const socket = io.connect('http://localhost:5000');
 const socket = io.connect('/');

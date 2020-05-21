@@ -98,6 +98,8 @@ io.on('connection', (socket) => {
   // Remove socket when client disconnects
   socket.on('disconnect', (data) => {
     console.log(`${socket.username} disconnected`);
+    users = users.filter((username) => username !== socket.username);
+    delete socketList[socket.username];
   });
 });
 

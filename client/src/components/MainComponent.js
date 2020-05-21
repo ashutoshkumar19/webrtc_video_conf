@@ -9,7 +9,7 @@ import {
   updateConnectedUser,
   getConnectedUser,
   captureDisplayMedia,
-} from '../webrtc/globalRTCPeerCoonection';
+} from '../webrtc/globalRTCPeerConnection';
 
 const MainComponent = ({ socket }) => {
   const [formData, setFormData] = useState({
@@ -71,14 +71,14 @@ const MainComponent = ({ socket }) => {
 
           var configuration = {
             iceServers: [
-              // {
-              //   urls: ['turn:numb.viagenie.ca'],
-              //   credential: 'muazkh',
-              //   username: 'webrtc@live.com',
-              // },
               {
-                urls: ['stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302'],
+                urls: ['turn:numb.viagenie.ca'],
+                credential: 'muazkh',
+                username: 'webrtc@live.com',
               },
+              // {
+              //   urls: ['stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302'],
+              // },
             ],
             iceCandidatePoolSize: 10,
           };
@@ -88,7 +88,11 @@ const MainComponent = ({ socket }) => {
           console.log('RTCPeerConnection object was created');
 
           // setup stream listening
-          myPeerConnection.addStream(stream);
+          try {
+            myPeerConnection.addStream(stream);
+          } catch (error) {
+            console.log(error);
+          }
 
           //when a remote user adds stream to the peer connection, we display it
           myPeerConnection.onaddstream = function (event) {
@@ -362,7 +366,7 @@ const MainComponent = ({ socket }) => {
     <Fragment>
       <div className='videoContainer'>
         <div className='localVideoContainer'>
-          <video id='localVideo' autoPlay playsInline controls />
+          <video id='localVideo' autoPlay playsInline controls muted='muted' />
         </div>
         <div className='remoteVideoContainer'>
           <video id='remoteVideo' autoPlay playsInline controls />

@@ -42,6 +42,7 @@ export const getMediaStream = async () => {
     }
     const constraints = {
       video: true,
+      // audio: true,
       audio: {
         echoCancellation: true,
       },
