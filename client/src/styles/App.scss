@@ -104,6 +104,7 @@
 .videoContainer {
   // display: flex;
   display: inline-flex;
+  width: 100%;
 
   .localVideoContainer,
   .remoteVideoContainer {
@@ -152,6 +153,7 @@
 }
 
 .btn-container {
+  width: 100%;
   display: inline-flex;
 
   .form-container {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
+import axios from 'axios';
 
 import './styles/App.scss';
 
@@ -17,6 +18,17 @@ const App = () => {
   };
   const [deviceList, setDeviceList] = useState(initialState);
   const { videoDevices, audioDevices } = deviceList;
+
+  // Ping Heroku server at fixed interval to stop it from sleeping
+  useEffect(() => {
+    setInterval(() => {
+      pingServer();
+    }, 300000);
+  }, []);
+  const pingServer = () => {
+    const res = axios.get('/api');
+    console.log(res);
+  };
 
   // Get all Audio & Video devices
   const getAllDevices = () => {
