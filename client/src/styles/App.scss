@@ -104,17 +104,18 @@
 .videoContainer {
   // display: flex;
   display: inline-flex;
-  width: 100%;
+  width: fit-content;
 
   .localVideoContainer,
   .remoteVideoContainer {
     height: 300px;
     width: fit-content;
     // min-width: 400px;
-    margin: 10px 0px 10px 30px;
+    margin: 10px 30px 10px 30px;
     padding: 2px;
     overflow: hidden;
     background-color: #4b4b4b;
+    text-align: center;
 
     video {
       height: 100%;
