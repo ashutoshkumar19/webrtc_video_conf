@@ -80,11 +80,11 @@ const MainComponent = ({ socket }) => {
                   'stun:stun4.l.google.com:19302',
                 ],
               },
-              // {
-              //   urls: ['turn:numb.viagenie.ca'],
-              //   credential: 'muazkh',
-              //   username: 'webrtc@live.com',
-              // },
+              {
+                url: 'turn:numb.viagenie.ca',
+                credential: 'muazkh',
+                username: 'webrtc@live.com',
+              },
             ],
             iceCandidatePoolSize: 10,
           };
