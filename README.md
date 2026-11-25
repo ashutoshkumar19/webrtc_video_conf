@@ -117,7 +117,3 @@ Because WebRTC media requires camera/microphone permissions, grant them when pro
 - **Room state is in-memory** on the server; restarting the server drops active meetings. Persistence (database) can be added later.
 - **Browser permissions**: camera/microphone access requires user consent; denied permissions result in joining without that media track. A timeout is provided so the permission dialog doesn't hang the join flow.
 - No authentication / user accounts beyond the display name entered on the landing page.
-
-## License
-
-ISC
