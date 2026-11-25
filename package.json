@@ -1,25 +1,31 @@
 {
   "name": "webrtc_video_conf",
-  "version": "1.0.0",
-  "description": "A Video conferencing and messaging app made using WebRTC technology for data transfer, Socket.io for signalling server and React for frontend.",
+  "version": "2.0.0",
+  "description": "A modern real-time video conferencing app, built with React, Vite, Tailwind CSS, WebRTC and Socket.io.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon server",
-    "client": "npm start --prefix client",
+    "server": "nodemon server.js",
+    "client": "npm run dev --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "npm run build --prefix client",
+    "start": "node server.js",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "Ashutosh Kumar",
   "license": "ISC",
   "dependencies": {
-    "config": "^3.3.1",
-    "express": "^4.17.1",
-    "express-validator": "^6.5.0",
-    "socket.io": "^2.3.0"
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1"
   },
   "devDependencies": {
-    "concurrently": "^5.2.0",
-    "nodemon": "^2.0.4"
+    "@vitejs/plugin-basic-ssl": "^2.3.0",
+    "concurrently": "^9.1.2",
+    "nodemon": "^3.1.9"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   }
 }
